@@ -18,7 +18,7 @@ void main() {
             keyValueStorageService: mockKeyValueStorageService)
         .provideApiKey();
 
-    expect(result, equals('api_key'));
+    expect(result, 'api_key');
   });
 
   test('should store api key', () {

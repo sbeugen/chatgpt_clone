@@ -2,6 +2,8 @@ import 'package:chatgpt_clone/services/storage/key_value_storage_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesKeyValueStorageService extends KeyValueStorageService {
+  SharedPreferences? _sharedPreferencesInstance;
+
   @override
   Future<String?> read(String key) async {
     return (await _getSharedPreferencesInstance()).getString(key);
@@ -17,6 +19,9 @@ class SharedPreferencesKeyValueStorageService extends KeyValueStorageService {
     (await _getSharedPreferencesInstance()).remove(key);
   }
 
-  Future<SharedPreferences> _getSharedPreferencesInstance() async =>
-      await SharedPreferences.getInstance();
+  Future<SharedPreferences> _getSharedPreferencesInstance() async {
+    _sharedPreferencesInstance ??= await SharedPreferences.getInstance();
+
+    return Future.value(_sharedPreferencesInstance);
+  }
 }

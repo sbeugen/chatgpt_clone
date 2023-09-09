@@ -2,37 +2,31 @@ import 'package:chatgpt_clone/services/chatgpt/chatgpt_chat_client.dart';
 import 'package:flutter/cupertino.dart';
 
 class ChatGPTModel with ChangeNotifier {
-  late ChatGPTChatClient _chatGPTChatClient;
+  late ChatGPTChatClient? _chatGPTChatClient;
   bool clientInitialized = false;
   String response = '';
 
-  ChatGPTModel({String? apiKey}) {
-    _init(apiKey);
+  ChatGPTModel({ChatGPTChatClient? chatGPTChatClient}) {
+    _init(chatGPTChatClient);
   }
 
-  set _initialized(bool isApiKeySet) {
-    clientInitialized = isApiKeySet;
+  set _initialized(bool isClientSet) {
+    clientInitialized = isClientSet;
     notifyListeners();
   }
 
-  void _init(String? apiKey) {
-    if (apiKey != null) {
-      _chatGPTChatClient = ChatGPTChatClient(apiKey);
-      _initialized = true;
-    } else {
-      _chatGPTChatClient = ChatGPTChatClient('');
-      _initialized = false;
-    }
+  void _init(ChatGPTChatClient? chatGPTChatClient) {
+    _chatGPTChatClient = chatGPTChatClient;
+    _initialized = _chatGPTChatClient != null;
   }
 
-  ChatGPTModel updateApiKey(String? apiKey) {
-    _init(apiKey);
-    return this;
+  ChatGPTModel updateClient(ChatGPTChatClient? chatGPTChatClient) {
+    return this.._init(chatGPTChatClient);
   }
 
-  Future<void> executePrompt(String prompt) {
+  Future<void>? executePrompt(String prompt) {
     response = '';
-    return _chatGPTChatClient.executePrompt(prompt).forEach((element) {
+    return _chatGPTChatClient?.executePrompt(prompt).forEach((element) {
       response += element.delta;
       notifyListeners();
     });
