@@ -24,11 +24,17 @@ import 'package:mockito/mockito.dart' as _i1;
 /// See the documentation for Mockito's code generation for more information.
 class MockChatGPTChatClient extends _i1.Mock implements _i2.ChatGPTChatClient {
   @override
-  _i3.Stream<_i2.ChatMessageEvent> executePrompt(String? prompt) =>
+  _i3.Stream<_i2.ChatMessageEvent> executePrompt(
+    String? prompt,
+    List<_i2.ChatGPTHistoryMessage>? previousMessages,
+  ) =>
       (super.noSuchMethod(
         Invocation.method(
           #executePrompt,
-          [prompt],
+          [
+            prompt,
+            previousMessages,
+          ],
         ),
         returnValue: _i3.Stream<_i2.ChatMessageEvent>.empty(),
         returnValueForMissingStub: _i3.Stream<_i2.ChatMessageEvent>.empty(),

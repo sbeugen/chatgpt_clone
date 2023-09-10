@@ -1,9 +1,8 @@
-import 'package:chatgpt_clone/pages/routes.dart';
 import 'package:chatgpt_clone/providers/chatgpt/chatgpt_model.dart';
 import 'package:chatgpt_clone/providers/settings/settings_model.dart';
+import 'package:chatgpt_clone/widgets/main_drawer.dart';
 import 'package:chatgpt_clone/widgets/missing_open_ai_api_key_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class ChatPage extends StatefulWidget {
@@ -52,11 +51,11 @@ class ChatPageState extends State<ChatPage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(
-              Icons.settings,
+              Icons.add,
               color: Theme.of(context).appBarTheme.toolbarTextStyle?.color,
             ),
             onPressed: () {
-              context.push(Routes.settings.path);
+              print('plus pressed');
             },
           )
         ],
@@ -65,7 +64,11 @@ class ChatPageState extends State<ChatPage> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
-            child: Text(chatGPTModel.response),
+            child: ListView(
+              children: chatGPTModel.currentChat.messages
+                  .map((chatMessage) => Text(chatMessage.text))
+                  .toList(),
+            ),
           ),
           Container(
             alignment: Alignment.bottomCenter,
@@ -90,6 +93,7 @@ class ChatPageState extends State<ChatPage> {
                   onPressed: _sendButtonEnabled
                       ? () {
                           chatGPTModel.executePrompt(_chatInputController.text);
+                          _chatInputController.clear();
                         }
                       : null,
                   icon: const Icon(
@@ -101,6 +105,7 @@ class ChatPageState extends State<ChatPage> {
           )
         ],
       ),
+      drawer: const MainDrawer(),
     );
   }
 }

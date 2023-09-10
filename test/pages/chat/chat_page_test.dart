@@ -14,6 +14,7 @@ void main() {
   group('missing api key dialog', () {
     testWidgets('should appear if api key is not set', (tester) async {
       final mockChatGPTModel = MockChatGPTModel();
+      when(mockChatGPTModel.currentChat).thenReturn(Chat());
 
       final mockSettingsModel = MockSettingsModel();
       when(mockSettingsModel.initialized).thenReturn(true);
@@ -28,6 +29,7 @@ void main() {
     testWidgets('should not appear if api key is set/client is initialized', (tester) async {
       final mockChatGPTModel = MockChatGPTModel();
       when(mockChatGPTModel.clientInitialized).thenReturn(true);
+      when(mockChatGPTModel.currentChat).thenReturn(Chat());
 
       final mockSettingsModel = MockSettingsModel();
       when(mockSettingsModel.initialized).thenReturn(true);

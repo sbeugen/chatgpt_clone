@@ -22,8 +22,18 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeChatGPTModel_0 extends _i1.SmartFake implements _i2.ChatGPTModel {
-  _FakeChatGPTModel_0(
+class _FakeChat_0 extends _i1.SmartFake implements _i2.Chat {
+  _FakeChat_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeChatGPTModel_1 extends _i1.SmartFake implements _i2.ChatGPTModel {
+  _FakeChatGPTModel_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -51,16 +61,22 @@ class MockChatGPTModel extends _i1.Mock implements _i2.ChatGPTModel {
         returnValueForMissingStub: null,
       );
   @override
-  String get response => (super.noSuchMethod(
-        Invocation.getter(#response),
-        returnValue: '',
-        returnValueForMissingStub: '',
-      ) as String);
+  _i2.Chat get currentChat => (super.noSuchMethod(
+        Invocation.getter(#currentChat),
+        returnValue: _FakeChat_0(
+          this,
+          Invocation.getter(#currentChat),
+        ),
+        returnValueForMissingStub: _FakeChat_0(
+          this,
+          Invocation.getter(#currentChat),
+        ),
+      ) as _i2.Chat);
   @override
-  set response(String? _response) => super.noSuchMethod(
+  set currentChat(_i2.Chat? _currentChat) => super.noSuchMethod(
         Invocation.setter(
-          #response,
-          _response,
+          #currentChat,
+          _currentChat,
         ),
         returnValueForMissingStub: null,
       );
@@ -77,14 +93,14 @@ class MockChatGPTModel extends _i1.Mock implements _i2.ChatGPTModel {
           #updateClient,
           [chatGPTChatClient],
         ),
-        returnValue: _FakeChatGPTModel_0(
+        returnValue: _FakeChatGPTModel_1(
           this,
           Invocation.method(
             #updateClient,
             [chatGPTChatClient],
           ),
         ),
-        returnValueForMissingStub: _FakeChatGPTModel_0(
+        returnValueForMissingStub: _FakeChatGPTModel_1(
           this,
           Invocation.method(
             #updateClient,
