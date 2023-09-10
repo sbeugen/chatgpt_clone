@@ -66,7 +66,12 @@ class ChatPageState extends State<ChatPage> {
           Expanded(
             child: ListView(
               children: chatGPTModel.currentChat.messages
-                  .map((chatMessage) => Text(chatMessage.text))
+                  .map((chatMessage) => Container(
+                      color: chatMessage.type == ChatMessageTypes.response &&
+                              chatMessage.text.isNotEmpty
+                          ? Colors.grey.withAlpha(30)
+                          : null,
+                      child: Text(chatMessage.text)))
                   .toList(),
             ),
           ),

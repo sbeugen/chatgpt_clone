@@ -27,6 +27,7 @@ class MainDrawer extends StatelessWidget {
                           context.push(Routes.settings.path);
                         },
                         child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.settings),
                             Text(
