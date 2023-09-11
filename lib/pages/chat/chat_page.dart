@@ -69,7 +69,7 @@ class ChatPageState extends State<ChatPage> {
                   .map((chatMessage) => Container(
                       color: chatMessage.type == ChatMessageTypes.response &&
                               chatMessage.text.isNotEmpty
-                          ? Colors.grey.withAlpha(30)
+                          ? Colors.white.withAlpha(70)
                           : null,
                       child: Text(chatMessage.text)))
                   .toList(),
