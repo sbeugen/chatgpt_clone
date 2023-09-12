@@ -36,13 +36,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: router,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
           brightness: Brightness.light,
-          colorSchemeSeed: Colors.lightBlue,
+          colorSchemeSeed: Colors.cyanAccent,
           useMaterial3: true),
       darkTheme: ThemeData(
           brightness: Brightness.dark,
-          colorSchemeSeed: Colors.lightBlue,
+          colorSchemeSeed: Colors.cyanAccent,
           useMaterial3: true),
       themeMode: ThemeMode.system,
       title: 'ChatGPT Clone',

@@ -26,7 +26,8 @@ void main() {
       expect(find.text('No OpenAI API key set'), findsOneWidget);
     });
 
-    testWidgets('should not appear if api key is set/client is initialized', (tester) async {
+    testWidgets('should not appear if api key is set/client is initialized',
+        (tester) async {
       final mockChatGPTModel = MockChatGPTModel();
       when(mockChatGPTModel.clientInitialized).thenReturn(true);
       when(mockChatGPTModel.currentChat).thenReturn(Chat());

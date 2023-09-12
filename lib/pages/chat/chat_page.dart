@@ -18,11 +18,21 @@ class ChatPageState extends State<ChatPage> {
   bool _dialogShown = false;
   bool _sendButtonEnabled = false;
   final _chatInputController = TextEditingController();
+  final _chatInputFocusNode = FocusNode();
+  final _chatScrollController = ScrollController();
 
   @override
   void dispose() {
     _chatInputController.dispose();
     super.dispose();
+  }
+
+  void _handlePlusActionButtonClick(bool shouldCreateNewChat) {
+    if (shouldCreateNewChat) {
+      print('create new chat');
+    } else {
+      FocusScope.of(context).requestFocus(_chatInputFocusNode);
+    }
   }
 
   @override
@@ -44,6 +54,14 @@ class ChatPageState extends State<ChatPage> {
       });
     }
 
+    if (_chatScrollController.positions.isNotEmpty) {
+      _chatScrollController.animateTo(
+        _chatScrollController.position.maxScrollExtent,
+        duration: const Duration(microseconds: 100),
+        curve: Curves.fastOutSlowIn,
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -55,7 +73,9 @@ class ChatPageState extends State<ChatPage> {
               color: Theme.of(context).appBarTheme.toolbarTextStyle?.color,
             ),
             onPressed: () {
-              print('plus pressed');
+              final hasAtLeastOneMessage =
+                  chatGPTModel.currentChat.messages.isNotEmpty;
+              _handlePlusActionButtonClick(hasAtLeastOneMessage);
             },
           )
         ],
@@ -65,14 +85,26 @@ class ChatPageState extends State<ChatPage> {
         children: [
           Expanded(
             child: ListView(
-              children: chatGPTModel.currentChat.messages
-                  .map((chatMessage) => Container(
-                      color: chatMessage.type == ChatMessageTypes.response &&
-                              chatMessage.text.isNotEmpty
-                          ? Colors.white.withAlpha(70)
-                          : null,
-                      child: Text(chatMessage.text)))
-                  .toList(),
+              controller: _chatScrollController,
+              children: chatGPTModel.currentChat.messages.map((chatMessage) {
+                final isResponse =
+                    chatMessage.type == ChatMessageTypes.response;
+                return Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 20),
+                    color: isResponse && chatMessage.text.isNotEmpty
+                        ? Colors.white.withAlpha(70)
+                        : null,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(isResponse ? 'Response:' : 'Request:',
+                            style:
+                                const TextStyle(fontWeight: FontWeight.bold)),
+                        Text(chatMessage.text)
+                      ],
+                    ));
+              }).toList(),
             ),
           ),
           Container(
@@ -87,6 +119,7 @@ class ChatPageState extends State<ChatPage> {
                     enabled: setupComplete,
                     decoration: InputDecoration(hintText: inputFieldHint),
                     controller: _chatInputController,
+                    focusNode: _chatInputFocusNode,
                     onChanged: (value) {
                       setState(() {
                         _sendButtonEnabled = value.isNotEmpty;
