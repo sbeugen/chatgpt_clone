@@ -17,6 +17,7 @@ class ChatPage extends StatefulWidget {
 class ChatPageState extends State<ChatPage> {
   bool _dialogShown = false;
   bool _sendButtonEnabled = false;
+  String lastMessageText = "";
   final _chatInputController = TextEditingController();
   final _chatInputFocusNode = FocusNode();
   final _chatScrollController = ScrollController();
@@ -54,7 +55,13 @@ class ChatPageState extends State<ChatPage> {
       });
     }
 
-    if (_chatScrollController.positions.isNotEmpty) {
+    final currentMessageText =
+        chatGPTModel.currentChat.lastMessage()?.text ?? "";
+    final isCurrentlyPrinting = lastMessageText != currentMessageText;
+
+    if (isCurrentlyPrinting && _chatScrollController.positions.isNotEmpty) {
+      lastMessageText = currentMessageText;
+
       _chatScrollController.animateTo(
         _chatScrollController.position.maxScrollExtent,
         duration: const Duration(microseconds: 100),
@@ -92,7 +99,7 @@ class ChatPageState extends State<ChatPage> {
                 return Container(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 30, vertical: 20),
-                    color: isResponse && chatMessage.text.isNotEmpty
+                    color: isResponse
                         ? Colors.white.withAlpha(70)
                         : null,
                     child: Column(
