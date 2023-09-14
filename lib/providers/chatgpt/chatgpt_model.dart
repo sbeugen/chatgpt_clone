@@ -1,6 +1,6 @@
+import 'package:chatgpt_clone/providers/chatgpt/chat_data.dart';
 import 'package:chatgpt_clone/services/chatgpt/chatgpt_chat_client.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:uuid/uuid.dart';
 
 class ChatGPTModel with ChangeNotifier {
   late ChatGPTChatClient? _chatGPTChatClient;
@@ -21,8 +21,8 @@ class ChatGPTModel with ChangeNotifier {
     _initialized = _chatGPTChatClient != null;
   }
 
-  ChatGPTModel updateClient(ChatGPTChatClient? chatGPTChatClient) {
-    return this.._init(chatGPTChatClient);
+  void updateClient(ChatGPTChatClient? chatGPTChatClient) {
+    _init(chatGPTChatClient);
   }
 
   Future<void>? executePrompt(String prompt) {
@@ -46,43 +46,16 @@ class ChatGPTModel with ChangeNotifier {
       notifyListeners();
     });
   }
-}
 
-class Chat {
-  final Uuid id = const Uuid();
-  final List<ChatMessage> messages = [];
-
-  void addNewMessage(ChatMessage message) {
-    messages.add(message);
+  void startNewChat() {
+    currentChat = Chat();
+    notifyListeners();
   }
 
-  ChatMessage? lastMessage() {
-    try {
-      return messages.last;
-    } catch (_) {
-      return null;
-    }
+  void setCurrentChat(Chat chat) {
+    currentChat = chat;
+    notifyListeners();
   }
-}
-
-class ChatMessage {
-  final ChatMessageTypes type;
-  String text = '';
-
-  ChatMessage(this.type);
-
-  void appendToText(String textPart) {
-    text += textPart;
-  }
-}
-
-enum ChatMessageTypes {
-  request('request'),
-  response('response');
-
-  const ChatMessageTypes(this.name);
-
-  final String name;
 }
 
 ChatGPTHistoryMessageRoles messageTypeToRole(ChatMessageTypes type) {

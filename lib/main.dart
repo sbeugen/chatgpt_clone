@@ -1,4 +1,5 @@
 import 'package:chatgpt_clone/pages/router.dart';
+import 'package:chatgpt_clone/providers/chatgpt/chat_history_model.dart';
 import 'package:chatgpt_clone/providers/chatgpt/chatgpt_model.dart';
 import 'package:chatgpt_clone/providers/settings/settings_model.dart';
 import 'package:chatgpt_clone/services/chatgpt/chatgpt_chat_client.dart';
@@ -18,12 +19,31 @@ void main() {
       ChangeNotifierProxyProvider<SettingsModel, ChatGPTModel>(
           create: (context) => ChatGPTModel(),
           update: (context, settingsModel, chatGPTModel) {
-            if (settingsModel.openAIApiKey != null && chatGPTModel != null) {
-              return chatGPTModel
-                  .updateClient(ChatGPTChatClient(settingsModel.openAIApiKey!));
+            if (chatGPTModel == null) {
+              return ChatGPTModel();
             }
-            return ChatGPTModel();
+
+            if (settingsModel.openAIApiKey != null) {
+              return chatGPTModel
+                ..updateClient(ChatGPTChatClient(settingsModel.openAIApiKey!));
+            }
+
+            return chatGPTModel;
           }),
+      ChangeNotifierProxyProvider<ChatGPTModel, ChatGPTHistoryModel>(
+          create: (context) => ChatGPTHistoryModel(),
+          update: (context, chatGPTModel, chatGPTHistoryModel) {
+            if (chatGPTHistoryModel == null) {
+              return ChatGPTHistoryModel();
+            }
+
+            if (chatGPTModel.currentChat.messages.isNotEmpty) {
+              return chatGPTHistoryModel
+                ..updateHistory(chatGPTModel.currentChat);
+            }
+
+            return chatGPTHistoryModel;
+          })
     ],
     child: const MyApp(),
   ));

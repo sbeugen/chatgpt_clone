@@ -3,12 +3,13 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
-import 'dart:ui' as _i5;
+import 'dart:async' as _i5;
+import 'dart:ui' as _i6;
 
-import 'package:chatgpt_clone/providers/chatgpt/chatgpt_model.dart' as _i2;
-import 'package:chatgpt_clone/providers/settings/settings_model.dart' as _i6;
-import 'package:chatgpt_clone/services/chatgpt/chatgpt_chat_client.dart' as _i3;
+import 'package:chatgpt_clone/providers/chatgpt/chat_data.dart' as _i2;
+import 'package:chatgpt_clone/providers/chatgpt/chatgpt_model.dart' as _i3;
+import 'package:chatgpt_clone/providers/settings/settings_model.dart' as _i7;
+import 'package:chatgpt_clone/services/chatgpt/chatgpt_chat_client.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -32,7 +33,7 @@ class _FakeChat_0 extends _i1.SmartFake implements _i2.Chat {
         );
 }
 
-class _FakeChatGPTModel_1 extends _i1.SmartFake implements _i2.ChatGPTModel {
+class _FakeChatGPTModel_1 extends _i1.SmartFake implements _i3.ChatGPTModel {
   _FakeChatGPTModel_1(
     Object parent,
     Invocation parentInvocation,
@@ -45,7 +46,7 @@ class _FakeChatGPTModel_1 extends _i1.SmartFake implements _i2.ChatGPTModel {
 /// A class which mocks [ChatGPTModel].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockChatGPTModel extends _i1.Mock implements _i2.ChatGPTModel {
+class MockChatGPTModel extends _i1.Mock implements _i3.ChatGPTModel {
   @override
   bool get clientInitialized => (super.noSuchMethod(
         Invocation.getter(#clientInitialized),
@@ -87,7 +88,7 @@ class MockChatGPTModel extends _i1.Mock implements _i2.ChatGPTModel {
         returnValueForMissingStub: false,
       ) as bool);
   @override
-  _i2.ChatGPTModel updateClient(_i3.ChatGPTChatClient? chatGPTChatClient) =>
+  _i3.ChatGPTModel updateClient(_i4.ChatGPTChatClient? chatGPTChatClient) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateClient,
@@ -107,15 +108,15 @@ class MockChatGPTModel extends _i1.Mock implements _i2.ChatGPTModel {
             [chatGPTChatClient],
           ),
         ),
-      ) as _i2.ChatGPTModel);
+      ) as _i3.ChatGPTModel);
   @override
-  _i4.Future<void>? executePrompt(String? prompt) => (super.noSuchMethod(
+  _i5.Future<void>? executePrompt(String? prompt) => (super.noSuchMethod(
         Invocation.method(
           #executePrompt,
           [prompt],
         ),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>?);
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>?);
   @override
   void maybeDispatchObjectCreation() => super.noSuchMethod(
         Invocation.method(
@@ -125,7 +126,7 @@ class MockChatGPTModel extends _i1.Mock implements _i2.ChatGPTModel {
         returnValueForMissingStub: null,
       );
   @override
-  void addListener(_i5.VoidCallback? listener) => super.noSuchMethod(
+  void addListener(_i6.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #addListener,
           [listener],
@@ -133,7 +134,7 @@ class MockChatGPTModel extends _i1.Mock implements _i2.ChatGPTModel {
         returnValueForMissingStub: null,
       );
   @override
-  void removeListener(_i5.VoidCallback? listener) => super.noSuchMethod(
+  void removeListener(_i6.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #removeListener,
           [listener],
@@ -161,7 +162,7 @@ class MockChatGPTModel extends _i1.Mock implements _i2.ChatGPTModel {
 /// A class which mocks [SettingsModel].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSettingsModel extends _i1.Mock implements _i6.SettingsModel {
+class MockSettingsModel extends _i1.Mock implements _i7.SettingsModel {
   @override
   set openAIApiKey(String? _openAIApiKey) => super.noSuchMethod(
         Invocation.setter(
@@ -207,7 +208,7 @@ class MockSettingsModel extends _i1.Mock implements _i6.SettingsModel {
         returnValueForMissingStub: null,
       );
   @override
-  void addListener(_i5.VoidCallback? listener) => super.noSuchMethod(
+  void addListener(_i6.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #addListener,
           [listener],
@@ -215,7 +216,7 @@ class MockSettingsModel extends _i1.Mock implements _i6.SettingsModel {
         returnValueForMissingStub: null,
       );
   @override
-  void removeListener(_i5.VoidCallback? listener) => super.noSuchMethod(
+  void removeListener(_i6.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #removeListener,
           [listener],

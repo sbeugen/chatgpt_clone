@@ -1,4 +1,5 @@
 import 'package:chatgpt_clone/pages/chat/chat_page.dart';
+import 'package:chatgpt_clone/providers/chatgpt/chat_data.dart';
 import 'package:chatgpt_clone/providers/chatgpt/chatgpt_model.dart';
 import 'package:chatgpt_clone/providers/settings/settings_model.dart';
 import 'package:flutter/material.dart';

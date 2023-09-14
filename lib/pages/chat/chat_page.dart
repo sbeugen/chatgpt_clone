@@ -1,3 +1,4 @@
+import 'package:chatgpt_clone/providers/chatgpt/chat_data.dart';
 import 'package:chatgpt_clone/providers/chatgpt/chatgpt_model.dart';
 import 'package:chatgpt_clone/providers/settings/settings_model.dart';
 import 'package:chatgpt_clone/widgets/main_drawer.dart';
@@ -26,14 +27,6 @@ class ChatPageState extends State<ChatPage> {
   void dispose() {
     _chatInputController.dispose();
     super.dispose();
-  }
-
-  void _handlePlusActionButtonClick(bool shouldCreateNewChat) {
-    if (shouldCreateNewChat) {
-      print('create new chat');
-    } else {
-      FocusScope.of(context).requestFocus(_chatInputFocusNode);
-    }
   }
 
   @override
@@ -69,6 +62,14 @@ class ChatPageState extends State<ChatPage> {
       );
     }
 
+    void handlePlusActionButtonClick(bool shouldCreateNewChat) {
+      if (shouldCreateNewChat) {
+        chatGPTModel.startNewChat();
+      } else {
+        FocusScope.of(context).requestFocus(_chatInputFocusNode);
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -82,7 +83,7 @@ class ChatPageState extends State<ChatPage> {
             onPressed: () {
               final hasAtLeastOneMessage =
                   chatGPTModel.currentChat.messages.isNotEmpty;
-              _handlePlusActionButtonClick(hasAtLeastOneMessage);
+              handlePlusActionButtonClick(hasAtLeastOneMessage);
             },
           )
         ],
@@ -93,15 +94,18 @@ class ChatPageState extends State<ChatPage> {
           Expanded(
             child: ListView(
               controller: _chatScrollController,
-              children: chatGPTModel.currentChat.messages.map((chatMessage) {
+              children: chatGPTModel.currentChat.messages
+                  .asMap()
+                  .entries
+                  .map((entry) {
+                final chatMessage = entry.value;
                 final isResponse =
                     chatMessage.type == ChatMessageTypes.response;
                 return Container(
+                    key: Key(entry.key.toString()),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 30, vertical: 20),
-                    color: isResponse
-                        ? Colors.white.withAlpha(70)
-                        : null,
+                    color: isResponse ? Colors.white.withAlpha(70) : null,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
