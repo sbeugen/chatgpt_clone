@@ -120,7 +120,7 @@ class ChatPageState extends State<ChatPage> {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           child: Text(
-                            chatMessage.text,
+                            chatMessage.text.isEmpty ? '...' : chatMessage.text,
                             style: TextStyle(
                               color: isResponse ? Colors.black : Colors.white,
                             ),
