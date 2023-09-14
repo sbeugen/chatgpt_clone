@@ -31,6 +31,7 @@ void main() {
             return chatGPTModel;
           }),
       ChangeNotifierProxyProvider<ChatGPTModel, ChatGPTHistoryModel>(
+          lazy: false,
           create: (context) => ChatGPTHistoryModel(),
           update: (context, chatGPTModel, chatGPTHistoryModel) {
             if (chatGPTHistoryModel == null) {
