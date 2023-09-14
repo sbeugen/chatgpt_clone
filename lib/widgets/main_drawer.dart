@@ -24,14 +24,16 @@ class MainDrawer extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
-              child: ListView(
-            children: chatGPTHistoryModel.chatHistory
-                .map((chatEntry) => TextButton(
-                      key: Key(chatEntry.id),
-                      onPressed: () => switchToSelectedChat(chatEntry),
-                      child: Text(chatEntry.id),
-                    ))
-                .toList(),
+              child: ListView.builder(
+            itemCount: chatGPTHistoryModel.chatHistory.length,
+            itemBuilder: (context, index) {
+              final entry = chatGPTHistoryModel.chatHistory.toList()[index];
+              return TextButton(
+                key: Key(entry.id),
+                onPressed: () => switchToSelectedChat(entry),
+                child: Text(entry.id),
+              );
+            },
           )),
           Container(
             alignment: Alignment.bottomLeft,

@@ -92,32 +92,41 @@ class ChatPageState extends State<ChatPage> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
-            child: ListView(
-              controller: _chatScrollController,
-              children: chatGPTModel.currentChat.messages
-                  .asMap()
-                  .entries
-                  .map((entry) {
-                final chatMessage = entry.value;
-                final isResponse =
-                    chatMessage.type == ChatMessageTypes.response;
-                return Container(
-                    key: Key(entry.key.toString()),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 20),
-                    color: isResponse ? Colors.white.withAlpha(70) : null,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(isResponse ? 'Response:' : 'Request:',
-                            style:
-                                const TextStyle(fontWeight: FontWeight.bold)),
-                        Text(chatMessage.text)
-                      ],
-                    ));
-              }).toList(),
-            ),
-          ),
+              child: ListView.builder(
+                  controller: _chatScrollController,
+                  itemCount: chatGPTModel.currentChat.messages.length,
+                  itemBuilder: (context, index) {
+                    final chatMessage =
+                        chatGPTModel.currentChat.messages[index];
+                    final isResponse =
+                        chatMessage.type == ChatMessageTypes.response;
+                    return Container(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                          vertical: 8.0,
+                        ),
+                        alignment: isResponse
+                            ? Alignment.centerLeft
+                            : Alignment.centerRight,
+                        child: Container(
+                          constraints: BoxConstraints(
+                              maxWidth:
+                                  MediaQuery.of(context).size.width * 0.85),
+                          padding: const EdgeInsets.all(12.0),
+                          decoration: BoxDecoration(
+                            color: isResponse
+                                ? Colors.grey[300]
+                                : Colors.blue[600],
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Text(
+                            chatMessage.text,
+                            style: TextStyle(
+                              color: isResponse ? Colors.black : Colors.white,
+                            ),
+                          ),
+                        ));
+                  })),
           Container(
             alignment: Alignment.bottomCenter,
             child: Row(
