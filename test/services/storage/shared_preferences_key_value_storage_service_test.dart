@@ -14,14 +14,14 @@ void main() {
 
   group('read', () {
     test('returns value if key exists', () async {
-      final testee = SharedPreferencesKeyValueStorageService();
+      final testee = SharedPreferencesKeyValueStorageRepository();
       final result = await testee.read('key1');
 
       expect(result, 'value1');
     });
 
     test('returns nulll if key does not exist', () async {
-      final testee = SharedPreferencesKeyValueStorageService();
+      final testee = SharedPreferencesKeyValueStorageRepository();
       final result = await testee.read('keyNotExisting');
 
       expect(result, null);
@@ -30,7 +30,7 @@ void main() {
 
   group('write', () {
     test('should store given value with given key', () async {
-      final testee = SharedPreferencesKeyValueStorageService();
+      final testee = SharedPreferencesKeyValueStorageRepository();
       await testee.write('someKey', 'someValue');
 
       final result = await testee.read('someKey');
@@ -40,7 +40,7 @@ void main() {
 
   group('delete', () {
     test('should delete given given key', () async {
-      final testee = SharedPreferencesKeyValueStorageService();
+      final testee = SharedPreferencesKeyValueStorageRepository();
       final existingValue = await testee.read('key1');
       expect(existingValue, 'value1');
 

@@ -1,7 +1,7 @@
 import 'package:chatgpt_clone/services/storage/key_value_storage_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPreferencesKeyValueStorageService extends KeyValueStorageService {
+class SharedPreferencesKeyValueStorageRepository extends KeyValueStorageService {
   SharedPreferences? _sharedPreferencesInstance;
 
   @override

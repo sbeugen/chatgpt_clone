@@ -15,7 +15,7 @@ void main() {
           create: (context) => SettingsModel(
               openAIApiKeyService: OpenAIApiKeyService(
                   keyValueStorageService:
-                      SharedPreferencesKeyValueStorageService()))),
+                      SharedPreferencesKeyValueStorageRepository()))),
       ChangeNotifierProxyProvider<SettingsModel, ChatGPTModel>(
           create: (context) => ChatGPTModel(),
           update: (context, settingsModel, chatGPTModel) {

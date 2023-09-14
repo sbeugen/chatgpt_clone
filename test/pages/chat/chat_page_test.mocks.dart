@@ -33,16 +33,6 @@ class _FakeChat_0 extends _i1.SmartFake implements _i2.Chat {
         );
 }
 
-class _FakeChatGPTModel_1 extends _i1.SmartFake implements _i3.ChatGPTModel {
-  _FakeChatGPTModel_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [ChatGPTModel].
 ///
 /// See the documentation for Mockito's code generation for more information.
@@ -88,27 +78,14 @@ class MockChatGPTModel extends _i1.Mock implements _i3.ChatGPTModel {
         returnValueForMissingStub: false,
       ) as bool);
   @override
-  _i3.ChatGPTModel updateClient(_i4.ChatGPTChatClient? chatGPTChatClient) =>
-      (super.noSuchMethod(
+  void updateClient(_i4.ChatGPTChatClient? chatGPTChatClient) =>
+      super.noSuchMethod(
         Invocation.method(
           #updateClient,
           [chatGPTChatClient],
         ),
-        returnValue: _FakeChatGPTModel_1(
-          this,
-          Invocation.method(
-            #updateClient,
-            [chatGPTChatClient],
-          ),
-        ),
-        returnValueForMissingStub: _FakeChatGPTModel_1(
-          this,
-          Invocation.method(
-            #updateClient,
-            [chatGPTChatClient],
-          ),
-        ),
-      ) as _i3.ChatGPTModel);
+        returnValueForMissingStub: null,
+      );
   @override
   _i5.Future<void>? executePrompt(String? prompt) => (super.noSuchMethod(
         Invocation.method(
@@ -117,6 +94,22 @@ class MockChatGPTModel extends _i1.Mock implements _i3.ChatGPTModel {
         ),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>?);
+  @override
+  void startNewChat() => super.noSuchMethod(
+        Invocation.method(
+          #startNewChat,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void setCurrentChat(_i2.Chat? chat) => super.noSuchMethod(
+        Invocation.method(
+          #setCurrentChat,
+          [chat],
+        ),
+        returnValueForMissingStub: null,
+      );
   @override
   void maybeDispatchObjectCreation() => super.noSuchMethod(
         Invocation.method(
