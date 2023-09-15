@@ -4,6 +4,7 @@ import 'package:chatgpt_clone/providers/settings/settings_model.dart';
 import 'package:chatgpt_clone/widgets/main_drawer.dart';
 import 'package:chatgpt_clone/widgets/missing_open_ai_api_key_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:jumping_dot/jumping_dot.dart';
 import 'package:provider/provider.dart';
 
 class ChatPage extends StatefulWidget {
@@ -119,12 +120,25 @@ class ChatPageState extends State<ChatPage> {
                                 : Colors.blue[600],
                             borderRadius: BorderRadius.circular(8.0),
                           ),
-                          child: Text(
-                            chatMessage.text.isEmpty ? '...' : chatMessage.text,
-                            style: TextStyle(
-                              color: isResponse ? Colors.black : Colors.white,
-                            ),
-                          ),
+                          child: chatMessage.text.isEmpty
+                              ? SizedBox(
+                                  width: 40,
+                                  child: JumpingDots(
+                                    color: Colors.black,
+                                    radius: 4,
+                                    numberOfDots: 3,
+                                    animationDuration:
+                                        const Duration(milliseconds: 100),
+                                    verticalOffset: 2,
+                                  ))
+                              : Text(
+                                  chatMessage.text,
+                                  style: TextStyle(
+                                    color: isResponse
+                                        ? Colors.black
+                                        : Colors.white,
+                                  ),
+                                ),
                         ));
                   })),
           Container(
