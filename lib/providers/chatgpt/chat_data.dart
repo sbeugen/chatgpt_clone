@@ -46,9 +46,7 @@ class ChatMessage {
 }
 
 enum ChatMessageTypes {
-  @JsonValue('request')
   request('request'),
-  @JsonValue('response')
   response('response');
 
   const ChatMessageTypes(this.name);
