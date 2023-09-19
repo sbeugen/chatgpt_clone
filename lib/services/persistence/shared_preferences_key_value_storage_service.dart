@@ -1,4 +1,4 @@
-import 'package:chatgpt_clone/services/storage/key_value_storage_service.dart';
+import 'package:chatgpt_clone/services/persistence/key_value_storage_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesKeyValueStorageRepository

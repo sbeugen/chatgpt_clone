@@ -1,8 +1,15 @@
 import 'package:uuid/uuid.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'chat_data.g.dart';
+
+@JsonSerializable(ignoreUnannotated: true)
 class Chat {
-  final String id = const Uuid().v4();
-  final List<ChatMessage> messages = [];
+  String id = const Uuid().v4();
+  @JsonKey(name: 'messages')
+  List<ChatMessage> messages = [];
+
+  Chat();
 
   void addNewMessage(ChatMessage message) {
     messages.add(message);
@@ -15,8 +22,13 @@ class Chat {
       return null;
     }
   }
+
+  factory Chat.fromMap(Map<String, dynamic> json) => _$ChatFromJson(json);
+
+  Map<String, dynamic> toMap() => _$ChatToJson(this);
 }
 
+@JsonSerializable()
 class ChatMessage {
   final ChatMessageTypes type;
   String text = '';
@@ -26,10 +38,17 @@ class ChatMessage {
   void appendToText(String textPart) {
     text += textPart;
   }
+
+  factory ChatMessage.fromJson(Map<String, dynamic> json) =>
+      _$ChatMessageFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ChatMessageToJson(this);
 }
 
 enum ChatMessageTypes {
+  @JsonValue('request')
   request('request'),
+  @JsonValue('response')
   response('response');
 
   const ChatMessageTypes(this.name);

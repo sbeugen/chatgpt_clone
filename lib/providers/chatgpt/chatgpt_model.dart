@@ -18,7 +18,7 @@ class ChatGPTModel with ChangeNotifier {
 
   void _init(ChatGPTChatClient? chatGPTChatClient) {
     _chatGPTChatClient = chatGPTChatClient;
-    _initialized = _chatGPTChatClient != null;
+    _initialized = chatGPTChatClient != null;
   }
 
   void updateClient(ChatGPTChatClient? chatGPTChatClient) {

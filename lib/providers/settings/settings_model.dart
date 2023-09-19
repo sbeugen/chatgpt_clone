@@ -8,14 +8,14 @@ class SettingsModel with ChangeNotifier {
 
   SettingsModel({required OpenAIApiKeyService openAIApiKeyService}) {
     _openAIApiKeyService = openAIApiKeyService;
-    _openAIApiKeyService
-        .provideApiKey()
-        .then((apiKey) => _setOpenAIApiKey(apiKey));
+    _openAIApiKeyService.provideApiKey().then((apiKey) {
+      initialized = true;
+      _setOpenAIApiKey(apiKey);
+    });
   }
 
   void _setOpenAIApiKey(String? apiKey) {
     openAIApiKey = apiKey;
-    initialized = true;
     notifyListeners();
   }
 

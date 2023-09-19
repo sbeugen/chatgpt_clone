@@ -4,11 +4,14 @@ import 'package:chatgpt_clone/providers/chatgpt/chatgpt_model.dart';
 import 'package:chatgpt_clone/providers/settings/settings_model.dart';
 import 'package:chatgpt_clone/services/chatgpt/chatgpt_chat_client.dart';
 import 'package:chatgpt_clone/services/chatgpt/openai_api_key_service.dart';
-import 'package:chatgpt_clone/services/storage/shared_preferences_key_value_storage_service.dart';
+import 'package:chatgpt_clone/services/persistence/history/chatgpt_history_repository.dart';
+import 'package:chatgpt_clone/services/persistence/shared_preferences_key_value_storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  final chatGPTHistoryRepository = await ChatGPTHistoryRepository.init();
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<SettingsModel>(
@@ -25,17 +28,21 @@ void main() {
 
             if (settingsModel.openAIApiKey != null) {
               return chatGPTModel
-                ..updateClient(ChatGPTChatClient(settingsModel.openAIApiKey!));
+                ..updateClient(settingsModel.openAIApiKey!.isNotEmpty
+                    ? ChatGPTChatClient(settingsModel.openAIApiKey!)
+                    : null);
             }
 
             return chatGPTModel;
           }),
       ChangeNotifierProxyProvider<ChatGPTModel, ChatGPTHistoryModel>(
           lazy: false,
-          create: (context) => ChatGPTHistoryModel(),
+          create: (context) => ChatGPTHistoryModel(
+              chatGPTHistoryRepository: chatGPTHistoryRepository),
           update: (context, chatGPTModel, chatGPTHistoryModel) {
             if (chatGPTHistoryModel == null) {
-              return ChatGPTHistoryModel();
+              return ChatGPTHistoryModel(
+                  chatGPTHistoryRepository: chatGPTHistoryRepository);
             }
 
             if (chatGPTModel.currentChat.messages.isNotEmpty) {

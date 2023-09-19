@@ -5,7 +5,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
-import 'package:chatgpt_clone/services/storage/key_value_storage_service.dart'
+import 'package:chatgpt_clone/services/persistence/key_value_storage_service.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 

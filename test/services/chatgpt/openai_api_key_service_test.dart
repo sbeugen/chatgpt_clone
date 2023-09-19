@@ -1,5 +1,5 @@
 import 'package:chatgpt_clone/services/chatgpt/openai_api_key_service.dart';
-import 'package:chatgpt_clone/services/storage/key_value_storage_service.dart';
+import 'package:chatgpt_clone/services/persistence/key_value_storage_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

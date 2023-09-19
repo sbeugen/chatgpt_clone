@@ -1,4 +1,4 @@
-import 'package:chatgpt_clone/services/storage/shared_preferences_key_value_storage_service.dart';
+import 'package:chatgpt_clone/services/persistence/shared_preferences_key_value_storage_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
