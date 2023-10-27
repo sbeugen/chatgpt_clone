@@ -7,7 +7,7 @@ class ChatMessageEvent {
 }
 
 class ChatGPTChatClient {
-  final _gptModel = "gpt-3.5-turbo";
+  final _gptModel = "gpt-4";
 
   ChatGPTChatClient(String apiKey) {
     OpenAI.apiKey = apiKey;
